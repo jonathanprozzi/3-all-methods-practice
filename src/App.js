@@ -33,7 +33,19 @@ const pages = [
 ];
 
 class App extends Component {
-  state = { index: 0 };
+  state = {
+    index: 0,
+    firstSection: true
+  };
+
+  firstMove = e => {
+    console.log(`state updated: ${this.state.sectionOne}`);
+    this.parallax.scrollTo(1);
+    this.setState(state => ({
+      firstSection: false
+    }));
+  };
+
   toggle = e =>
     this.setState(state => ({
       index: state.index === pages.length - 1 ? 0 : state.index + 1
@@ -51,7 +63,7 @@ class App extends Component {
           <ParallaxLayer offset={0}>
             <SectionContainer bgColor="#16c79e">
               <SectionTitle>Section One</SectionTitle>
-              <GhostButton onClick={() => this.parallax.scrollTo(1)}>
+              <GhostButton onClick={this.firstMove}>
                 Interesting... 🧐
               </GhostButton>
             </SectionContainer>
@@ -107,6 +119,24 @@ class App extends Component {
             </SectionContainerGridTwo>
           </ParallaxLayer>
         </Parallax>
+        {this.state.firstSection === false && (
+          <Chevron
+            onClick={() => this.parallax.scrollTo(0)}
+            color="#dafbf3"
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="100px"
+            height="100px"
+            viewBox="0 0 31.11 31.11"
+            enableBackground="new 0 0 31.11 31.11"
+          >
+            <path
+              class="innerPath"
+              d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"
+            />
+          </Chevron>
+        )}
       </AppWrapper>
     );
   }
@@ -137,7 +167,20 @@ const SectionContainer = styled.div`
   justify-content: center;
 `;
 
+const Chevron = styled.svg`
+  position: absolute;
+  top: 100;
+  left: 100;
+  z-index: 10;
+  fill: ${props => (props.color ? props.color : "#2d2d2d")};
+  &:hover {
+    cursor: pointer;
+    fill: "#2d2d2d";
+  }
+`;
+
 const SectionContainerGrid = styled.div`
+  position: absolute;
   background: ${props => (props.bgColor ? props.bgColor : "#2d2d2d")};
   height: 100%;
   width: 100%;
@@ -178,7 +221,6 @@ const SubSectionTwo = styled.div`
 
   div {
     cursor: pointer;
-
     width: 100%;
     height: 100%;
     display: flex;
