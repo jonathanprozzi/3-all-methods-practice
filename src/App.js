@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Waypoint from "react-waypoint";
 import { config } from "react-spring";
 import { Spring, Transition, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "react-spring/addons";
@@ -35,21 +36,33 @@ const pages = [
 class App extends Component {
   state = {
     index: 0,
-    firstSection: true
+    initialLoad: true,
+    firstSection: true,
+    sectionFour: false
   };
 
   firstMove = e => {
     console.log(`state updated: ${this.state.sectionOne}`);
-    this.parallax.scrollTo(1);
+    this.parallax.scrollTo(3);
     this.setState(state => ({
       firstSection: false
     }));
   };
 
-  toggle = e =>
+  toggle = e => {
     this.setState(state => ({
-      index: state.index === pages.length - 1 ? 0 : state.index + 1
+      index: state.index === pages.length - 1 ? 0 : state.index + 1,
+      initialLoad: false
     }));
+  };
+
+  sectionFourScroll = e => {
+    this.setState(state => ({
+      sectionFour: !this.state.sectionFour
+    }));
+    console.log(`state updated: ${this.state.sectionFour}`);
+  };
+
   render() {
     return (
       <AppWrapper>
@@ -90,16 +103,49 @@ class App extends Component {
             </SectionContainer>
           </ParallaxLayer>
           <ParallaxLayer offset={3}>
-            <SectionContainerGridTwo onClick={this.toggle}>
-              <SubSection>
-                <SectionTitle>Cold-Press Humblebrag</SectionTitle>
-                <SectionCopy>
-                  Photo booth hashtag gochujang pop-up four dollar toast
-                  bushwick truffaut. Cold-pressed semiotics tumblr drinking
-                  vinegar schlitz humblebrag man bun.
-                </SectionCopy>
-              </SubSection>
-              <SubSectionTwo>
+            <Waypoint
+              onEnter={this.sectionFourScroll}
+              onLeave={this.sectionFourScroll}
+            />
+            <SectionContainerGridTwo>
+              <React.Fragment>
+                <SubSection>
+                  <Spring
+                    config={{ tension: 150, friction: 20, delay: 500 }}
+                    from={{
+                      opacity: 0,
+                      transform:
+                        "translate3d(0,400px,0) scale(0) rotateY(180deg)"
+                    }}
+                    to={{
+                      opacity: 1,
+                      transform: "translate3d(0,0,0) scale(1) rotateY(0deg)"
+                    }}
+                    reset={this.state.initialLoad}
+                  >
+                    {props => (
+                      <SectionTitle style={props}>
+                        Cold-Press Humblebrag
+                      </SectionTitle>
+                    )}
+                  </Spring>
+                  <Spring
+                    config={{ tension: 150, friction: 20, delay: 750 }}
+                    from={{ opacity: 0 }}
+                    to={{ opacity: 1 }}
+                    reset={this.state.initialLoad}
+                  >
+                    {props => (
+                      <SectionCopy style={props}>
+                        Photo booth hashtag gochujang pop-up four dollar toast
+                        bushwick truffaut. Cold-pressed semiotics tumblr
+                        drinking vinegar schlitz humblebrag man bun.
+                      </SectionCopy>
+                    )}
+                  </Spring>
+                </SubSection>
+              </React.Fragment>
+              <SubSectionTwo onClick={this.toggle}>
                 <Transition
                   native
                   unique
@@ -155,7 +201,7 @@ const AppWrapper = styled.div`
   padding: 0;
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled(animated.h2)`
   color: #dafbf3;
   font-size: 3rem;
   margin: 0;
