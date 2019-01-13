@@ -58,7 +58,8 @@ class App extends Component {
 
   sectionFourScroll = e => {
     this.setState(state => ({
-      sectionFour: !this.state.sectionFour
+      sectionFour: !this.state.sectionFour,
+      initialLoad: !this.state.initialLoad
     }));
     console.log(`state updated: ${this.state.sectionFour}`);
   };
