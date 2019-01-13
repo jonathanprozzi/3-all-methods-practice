@@ -69,7 +69,7 @@ class App extends Component {
       <AppWrapper>
         <Parallax
           config={config.slow}
-          pages={4}
+          pages={5}
           scrolling={true}
           vertical
           ref={ref => (this.parallax = ref)}
@@ -116,7 +116,7 @@ class App extends Component {
                     from={{
                       opacity: 0,
                       transform:
-                        "translate3d(0,400px,0) scale(0) rotateY(180deg)"
+                        "translate3d(0,400px,0) scale(0.25) rotateY(180deg)"
                     }}
                     to={{
                       opacity: 1,
@@ -167,6 +167,52 @@ class App extends Component {
                 >
                   {index => pages[index]}
                 </Transition>
+              </SubSectionTwo>
+            </SectionContainerGridTwo>
+          </ParallaxLayer>
+          <Waypoint
+            onEnter={this.sectionFourScroll}
+            onLeave={this.sectionFourScroll}
+          />
+          <ParallaxLayer offset={4}>
+            <SectionContainerGridTwo>
+              <SubSection>
+                <Spring
+                  config={{ tension: 150, friction: 10, delay: 500 }}
+                  from={{
+                    opacity: 0,
+                    transform: "translate3d(0,-100%,0) rotate(0deg)"
+                  }}
+                  to={{
+                    opacity: 1,
+                    transform: "translate3d(0,0,0)  rotateZ(0deg)"
+                  }}
+                  reset={this.state.initialLoad}
+                >
+                  {props => (
+                    <React.Fragment>
+                      <SectionTitle style={props}>
+                        Normcore Authentic Beards
+                      </SectionTitle>
+                      <SectionCopy style={props}>
+                        Normcore retro disrupted charcoal tbh. Everyday food
+                        truck activated craft coffee affogato tilde chillwave.
+                      </SectionCopy>
+                    </React.Fragment>
+                  )}
+                </Spring>
+                <Spring
+                  config={{ tension: 280, friction: 60, delay: 1000 }}
+                  from={{ opacity: 0 }}
+                  to={{ opacity: 1 }}
+                  reset={this.state.initialLoad}
+                >
+                  {props => <GhostButton style={props}>Onward! 🌈</GhostButton>}
+                </Spring>
+              </SubSection>
+              <SubSectionTwo bgColor="#8dddca">
+                <SectionTitle>Asdf</SectionTitle>
+                <SectionCopy>Asdf</SectionCopy>
               </SubSectionTwo>
             </SectionContainerGridTwo>
           </ParallaxLayer>
