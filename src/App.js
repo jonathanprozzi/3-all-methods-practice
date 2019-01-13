@@ -92,7 +92,12 @@ class App extends Component {
           <ParallaxLayer offset={3}>
             <SectionContainerGridTwo onClick={this.toggle}>
               <SubSection>
-                <SectionTitle>Hi</SectionTitle>
+                <SectionTitle>Cold-Press Humblebrag</SectionTitle>
+                <SectionCopy>
+                  Photo booth hashtag gochujang pop-up four dollar toast
+                  bushwick truffaut. Cold-pressed semiotics tumblr drinking
+                  vinegar schlitz humblebrag man bun.
+                </SectionCopy>
               </SubSection>
               <SubSectionTwo>
                 <Transition
@@ -155,6 +160,18 @@ const SectionTitle = styled.h2`
   font-size: 3rem;
   margin: 0;
   padding-bottom: 2rem;
+`;
+
+const SectionCopy = styled.h2`
+  color: #e3fcf6;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 2.8rem;
+  margin: 0;
+  padding-top: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 1.5rem;
 `;
 
 const SectionContainer = styled.div`
